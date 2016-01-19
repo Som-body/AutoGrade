@@ -1,0 +1,20 @@
+Assignment1
+Student: Oscar Hong
+Auto-Graded....
+Results (Tentative):
+Javadoc .........................2 out of 2
+-Javadoc found
+Method Name .....................2 out of 2
+-Name helloWorld found
+Compiles ........................2 out of 2
+-Compiled Successfully (Standalone)
+Correct Return Type .............1 out of 1
+One Test Case ...................1 out of 1
+Multiple Test Cases .............1 out of 1
+All Test Cases ..................1 out of 1
+-------------------------------------------
+Total .........................10 out of 10
+
+
+Test Case .......................3 out of 3
+

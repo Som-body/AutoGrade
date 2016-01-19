@@ -1,0 +1,25 @@
+AssignmentTest
+Auto-Graded....
+Results (Tentative):
+Javadoc .........................2 out of 2
+-Javadoc found
+Method Name .....................0 out of 2
+-Method name not found 
+Compiles ........................2 out of 2
+-Compiled Successfully (Standalone) 
+ File Contents:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+package test;
+    
+    public class AssignmentTest {
+    /*** test*/    
+    }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Correct Return Type .............0 out of 1
+-Could not run
+Test Case .......................0 out of 3
+-Could not run
+-------------------------------------------
+Total ..........................4 out of 10
+
+Please send an email or talk to me if you believe there is a mistake. You can retry as many times as you like within the time limit.
