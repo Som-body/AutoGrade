@@ -332,6 +332,20 @@ Please send an email or talk to me if you believe there is a mistake. You can re
         msg = 'Subject: %s\n\n%s' % (e_subject, e_body)
         self.server.sendmail(self.email_addr, to_addrs, msg)
     
+    def keep_alive(self):
+        try:
+            status = self.server.noop()[0]
+            if status != 250:
+                self.server = smtplib.SMTP('smtp.gmail.com:587')
+                self.server.ehlo()
+                self.server.starttls()
+                self.server.login(self.email_addr ,self.password)
+        except:  # smtplib.SMTPServerDisconnected
+            self.server = smtplib.SMTP('smtp.gmail.com:587')
+            self.server.ehlo()
+            self.server.starttls()
+            self.server.login(self.email_addr ,self.password)
+    
     def auto_grade(self, minutes: str, assignmentname: str, methodname: str, ta_address: str,prnt = True):
         if prnt:
             print("Starting....")
@@ -349,18 +363,6 @@ Please send an email or talk to me if you believe there is a mistake. You can re
             if (random.randrange(20) == 1):
                 if prnt:
                     print(str(minutes - ((current_time - self.get_start_time()) / 60)) + ' minutes left...')
-                try:
-                    status = self.server.noop()[0]
-                    if status != 250:
-                        self.server = smtplib.SMTP('smtp.gmail.com:587')
-                        self.server.ehlo()
-                        self.server.starttls()
-                        self.server.login(self.email_addr ,self.password)
-                except:  # smtplib.SMTPServerDisconnected
-                    self.server = smtplib.SMTP('smtp.gmail.com:587')
-                    self.server.ehlo()
-                    self.server.starttls()
-                    self.server.login(self.email_addr ,self.password)
             batch = []
             batch = self.email_list(prnt)
             for em in batch:
@@ -388,6 +390,7 @@ Please send an email or talk to me if you believe there is a mistake. You can re
                     grade = self._grade(assignmentname, methodname, e_body)
                     with open(assignmentname + '.txt', 'r') as myfile:
                         response = myfile.read()
+                    self.keep_alive()
                     self.send_email(e_sender, ('RE: ' + e_subject), response)
                     if prnt:
                         print("Grade: " + str(grade))
@@ -396,6 +399,7 @@ Please send an email or talk to me if you believe there is a mistake. You can re
                     
         for name in grades:
             compilation += name + ':' + str(grades[name]) + '\r\n'
+        self.keep_alive()
         self.send_email(ta_address, ("ICS 211: " + assignmentname + " Grades"), compilation)
         if prnt:
             print("Time up")
