@@ -12,6 +12,7 @@ import time
 import re
 import smtplib
 import random
+import config
 
 class EmailGrade:
     '''
@@ -26,7 +27,7 @@ class EmailGrade:
         '''
         
         self.date_criterion = None
-        self.email_addr = 'ICS211AutoGrade@gmail.com'
+        self.email_addr = config.email_addr
         self.password = password
         
         self.conn = imaplib.IMAP4_SSL("imap.gmail.com", 993)
@@ -91,6 +92,10 @@ class EmailGrade:
             e_sender = e_data['From']
             e_sender = utils.parseaddr(e_sender)[1]
             e_time = utils.mktime_tz(utils.parsedate_tz(e_data['Date'])) #utc timestamp
+            if prnt:
+                print("Email found, Subject: " + e_data['Subject'])
+                print("Email sent: " + str(e_time))
+                print("Start time: " + str(self.get_start_time()))
             if e_time > self.get_start_time():
                 e_subject = e_data['Subject'] #subject
                 
@@ -103,7 +108,9 @@ class EmailGrade:
                 else:
                     body = e_data.get_payload()
                 e_body = body.split("<html>")[0] #payload
-                e_body = e_body.replace("=C2=A0", "")
+                #e_body = e_body.replace("=C2=A0", "")
+                e_body = quopri.decodestring(e_body)
+                e_body = e_body.decode('utf-8')
                 
                 e_list.append(e_sender)
                 e_list.append(e_time)
@@ -283,7 +290,7 @@ Results (Tentative):
 Javadoc .........................''' + str(results1[0]) + ''' out of 2
 -Javadoc ''' + jd_found + '''
 Method Name .....................''' + str(results1[1]) + ''' out of 2
--Method name ''' + mn_found + ''' 
+-Method name (''' + methodname + ''')''' + mn_found + ''' 
 ''')
         except:
             print("Failed to open file")

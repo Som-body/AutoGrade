@@ -1,5 +1,10 @@
 package test;
     
     public class AssignmentTest {
-    /*** test*/    
+    /*** Something
+*/
+public static String helloWorld(){ return "Correct String=
+!";
+}
+    
     }

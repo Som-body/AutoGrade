@@ -5,5 +5,8 @@ Created on Jan 17, 2016
 '''
 method = 'helloWorld'
 assignmentname = 'AssignmentTest'
-TA = 'bsogata@hawaii.edu'
+#TA = 'bsogata@hawaii.edu'
+TA = 'ICS211AutoGrade@gmail.com'
+email_addr = 'AThrowAwayEmail82@gmail.com'
+#email_addr = 'ICS211AutoGrade@gmail.com'
 

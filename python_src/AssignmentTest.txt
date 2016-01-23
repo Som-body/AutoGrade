@@ -3,16 +3,26 @@ Auto-Graded....
 Results (Tentative):
 Javadoc .........................2 out of 2
 -Javadoc found
-Method Name .....................0 out of 2
--Method name not found 
-Compiles ........................2 out of 2
--Compiled Successfully (Standalone) 
+Method Name .....................2 out of 2
+-Method name found 
+Compiles ........................0 out of 2
+-Compilation failed
  File Contents:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 package test;
     
     public class AssignmentTest {
-    /*** test*/    
+    /*** Something
+
+*/
+
+public static String helloWorld(){ return "Correct String=
+
+!";
+
+}
+
+    
     }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Correct Return Type .............0 out of 1
