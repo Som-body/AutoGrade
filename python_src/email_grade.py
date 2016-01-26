@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Created on Jan 11, 2016
 
@@ -13,6 +14,7 @@ import re
 import smtplib
 import random
 import config
+
 
 class EmailGrade:
     '''
@@ -88,39 +90,36 @@ class EmailGrade:
         for num in data[0].split():
             typ, data = self.conn.fetch(num, '(RFC822)')
             e_list = []
-            e_data = parser.Parser().parsestr(data[0][1].decode('utf-8')) 
+            e_data = parser.BytesParser().parsebytes(data[0][1]) 
             e_sender = e_data['From']
             e_sender = utils.parseaddr(e_sender)[1]
             e_time = utils.mktime_tz(utils.parsedate_tz(e_data['Date'])) #utc timestamp
-            if prnt:
-                print("Email found, Subject: " + e_data['Subject'])
-                print("Email sent: " + str(e_time))
-                print("Start time: " + str(self.get_start_time()))
-            if e_time > self.get_start_time():
-                e_subject = e_data['Subject'] #subject
-                
-                if e_data.is_multipart():
-                    body = ""
-                    for payload in e_data.get_payload():
-                        if(payload.get_content_type() == "text/plain"):
-                            body += payload.get_payload()   
+            e_subject = e_data['Subject'] #subject
+            if e_data.is_multipart():
+                body = ""
+                for payload in e_data.get_payload():
+                    if(payload.get_content_type() == "text/plain"):
+                        body += payload.get_payload()   
                         
-                else:
-                    body = e_data.get_payload()
-                e_body = body.split("<html>")[0] #payload
-                #e_body = e_body.replace("=C2=A0", "")
-                e_body = quopri.decodestring(e_body)
-                e_body = e_body.decode('utf-8')
+            else:
+                body = e_data.get_payload()
+            e_body = body
+            #e_body = body.split("<html>")[0] #payload
+            e_body = e_body.replace("=C2=A0", "")
+            e_body = e_body.replace("=\r\n", "")
+            e_body = e_body.replace("\r\n", "\n")
+            #e_body = quopri.decodestring(e_body)
+            #e_body = e_body.decode('utf-8')
+            
+            e_list.append(e_sender)
+            e_list.append(e_time)
+            e_list.append(e_subject)
+            e_list.append(e_body)
                 
-                e_list.append(e_sender)
-                e_list.append(e_time)
-                e_list.append(e_subject)
-                e_list.append(e_body)
+            if prnt:
+                print("Email Found:\nFrom: %s\nTime: %s\nSubject: %s\nBody:\n%s" % (e_list[0], e_list[1], e_list[2], e_list[3]))
                 
-                if prnt:
-                    print("Email Found:\nFrom: %s\nTime: %s\nSubject: %s\nBody:\n%s" % (e_list[0], e_list[1], e_list[2], e_list[3]))
-                
-                list_of_email.append(e_list)
+            list_of_email.append(e_list)
         return list_of_email
     
     def compile_java(self, java_file: str):
@@ -302,9 +301,9 @@ Method Name .....................''' + str(results1[1]) + ''' out of 2
             file2 = open((assignmentname + ".java"), 'w')
             file2.write('''package test;
     
-    public class ''' + assignmentname +''' {
-    ''' + email_body + '''    
-    }''')
+public class ''' + assignmentname +''' {
+''' + email_body + '''    
+}''')
         except:
             print("Failed to write to test file")
         finally: 
@@ -353,13 +352,14 @@ Please send an email or talk to me if you believe there is a mistake. You can re
             self.server.starttls()
             self.server.login(self.email_addr ,self.password)
     
-    def auto_grade(self, minutes: str, assignmentname: str, methodname: str, ta_address: str,prnt = True):
+    def auto_grade(self, minutes: int, assignmentname: str, methodname: str, ta_address: str,prnt = True):
         if prnt:
             print("Starting....")
-        
+        self.email_list()
         self.set_start_time()
         seconds = minutes * 60
         current_time = time.time()
+        print_counter = 0;
         grades = {}
         compilation = 'Grades for ' + assignmentname + '(Tentative)\r\n'
         
@@ -367,7 +367,8 @@ Please send an email or talk to me if you believe there is a mistake. You can re
             print("Started!!!")
         
         while (current_time - self.get_start_time()) < seconds:
-            if (random.randrange(20) == 1):
+            if (((current_time - self.get_start_time()) / 60) > print_counter):
+                print_counter += .1
                 if prnt:
                     print(str(minutes - ((current_time - self.get_start_time()) / 60)) + ' minutes left...')
             batch = []

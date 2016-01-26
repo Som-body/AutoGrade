@@ -4,32 +4,30 @@ Results (Tentative):
 Javadoc .........................2 out of 2
 -Javadoc found
 Method Name .....................2 out of 2
--Method name found 
-Compiles ........................0 out of 2
--Compilation failed
+-Method name (helloWorld)found 
+Compiles ........................2 out of 2
+-Compiled Successfully (Standalone) 
  File Contents:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 package test;
     
-    public class AssignmentTest {
-    /*** Something
-
+public class AssignmentTest {
+ /**
+* Something
 */
 
-public static String helloWorld(){ return "Correct String=
-
-!";
-
+public static String helloWorld(){
+    return "Correct String!";
 }
-
     
-    }
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Correct Return Type .............0 out of 1
--Could not run
+Correct Return Type .............1 out of 1
+-Expected: java.lang.String | Type: java.lang.String
 Test Case .......................0 out of 3
--Could not run
+-Summary: Striped all non-letters from result and set all letters to lowercase
+ Expected: "helloworld" | Result: "correctstring"
 -------------------------------------------
-Total ..........................4 out of 10
+Total ..........................7 out of 10
 
 Please send an email or talk to me if you believe there is a mistake. You can retry as many times as you like within the time limit.
