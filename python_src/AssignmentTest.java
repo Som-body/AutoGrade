@@ -1,12 +1,15 @@
 package test;
     
 public class AssignmentTest {
- /**
-* Something
-*/
+    /**
+     * Prints "Hello World" to the console.
+     *
+     * @param args
+     *
+     */
 
-public static String helloWorld(){
-    return "Correct String!";
-}
+    public static String helloWorld() {
+      return "Hello world!";
+    }
     
 }

@@ -12,22 +12,25 @@ Compiles ........................2 out of 2
 package test;
     
 public class AssignmentTest {
- /**
-* Something
-*/
+    /**
+     * Prints "Hello World" to the console.
+     *
+     * @param args
+     *
+     */
 
-public static String helloWorld(){
-    return "Correct String!";
-}
+    public static String helloWorld() {
+      return "Hello world!";
+    }
     
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Correct Return Type .............1 out of 1
 -Expected: java.lang.String | Type: java.lang.String
-Test Case .......................0 out of 3
+Test Case .......................3 out of 3
 -Summary: Striped all non-letters from result and set all letters to lowercase
- Expected: "helloworld" | Result: "correctstring"
+ Expected: "helloworld" | Result: "helloworld"
 -------------------------------------------
-Total ..........................7 out of 10
+Total ..........................10 out of 10
 
 Please send an email or talk to me if you believe there is a mistake. You can retry as many times as you like within the time limit.

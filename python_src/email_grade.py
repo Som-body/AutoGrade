@@ -347,6 +347,7 @@ Please send an email or talk to me if you believe there is a mistake. You can re
                 self.server.starttls()
                 self.server.login(self.email_addr ,self.password)
         except:  # smtplib.SMTPServerDisconnected
+            print("Connection not found...\nRestablishing...")
             self.server = smtplib.SMTP('smtp.gmail.com:587')
             self.server.ehlo()
             self.server.starttls()
